@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owner(uid) { return signedIn() && request.auth.uid == uid; }
+
+    // Dữ liệu cá nhân: mỗi người chỉ truy cập users/{uid} của chính mình.
+    match /users/{uid} {
+      match /progress/{id}  { allow read, write: if owner(uid); }
+      match /custom/{id}    { allow read, write: if owner(uid); }
+      match /runs/{id}      { allow read, create: if owner(uid); allow update, delete: if false; }
+      match /meta/{id}      { allow read, write: if owner(uid); }
+      // Nhật ký hoạt động (nguồn của XP/streak): chỉ được thêm, không sửa hoặc xóa; điểm mỗi bản ghi bị giới hạn.
+      match /activity/{id} {
+        allow read: if owner(uid);
+        allow create: if owner(uid)
+          && request.resource.data.kind in ['learn', 'review', 'exercise', 'bonus']
+          && request.resource.data.points is int
+          && request.resource.data.points >= 0 && request.resource.data.points <= 30;
+        allow update, delete: if false;
+      }
+    }
+    // Danh sách 99 Quán dụng ngữ và dữ liệu dùng chung KHÔNG nằm trong Firestore (là tệp tĩnh), nên không client nào ghi được.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
