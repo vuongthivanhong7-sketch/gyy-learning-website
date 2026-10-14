@@ -5,7 +5,7 @@
   functions = "netlify/functions"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
   # Các biến VITE_* là cấu hình công khai theo thiết kế (nằm trong mã frontend); không để trình quét bí mật của Netlify làm hỏng bản build.
   SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_AUTH_DOMAIN,VITE_FIREBASE_PROJECT_ID,VITE_FIREBASE_APP_ID,VITE_FIREBASE_STORAGE_BUCKET,VITE_FIREBASE_MESSAGING_SENDER_ID,VITE_TTS_ENDPOINT"
 
