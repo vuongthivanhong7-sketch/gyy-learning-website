@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Bảng màu pastel xanh dương (đã kiểm tra tương phản WCAG AA: chữ chính 10.8:1, chữ phụ 4.8:1, liên kết 6.0:1, chữ trên nút 6.8:1). */
+  --page: 244 248 255; --card: 255 255 255; --ink: 38 59 83; --muted: 88 112 138; --line: 217 230 245; --soft: 237 244 255;
+  --brand: 131 179 247; --brand-strong: 47 97 153; --brand-soft: 220 235 255; --on-brand: 16 41 74;
+  --ok: 11 122 86; --ok-soft: 220 245 234; --warn: 154 82 0; --warn-soft: 254 240 214;
+  --bad: 196 43 60; --bad-soft: 253 232 234; --shadow: 38 80 140;
+  --header-h: 60px; --bottom-h: 64px;
+}
+.dark {
+  --page: 14 26 43; --card: 21 38 61; --ink: 230 238 249; --muted: 163 182 204; --line: 40 64 92; --soft: 27 47 73;
+  --brand: 140 185 248; --brand-strong: 169 203 255; --brand-soft: 33 59 92; --on-brand: 14 37 66;
+  --ok: 94 219 168; --ok-soft: 18 57 44; --warn: 251 176 64; --warn-soft: 66 46 14;
+  --bad: 255 138 150; --bad-soft: 74 29 38; --shadow: 0 0 0;
+}
+html, body, #root { min-height: 100%; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: rgb(var(--page)); color: rgb(var(--ink));
+  font-family: Nunito, 'Be Vietnam Pro', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 16px; line-height: 1.6; overflow-x: clip; overflow-wrap: break-word;
+}
+.han { font-family: 'Noto Sans SC', 'Noto Sans CJK SC', 'Noto Serif SC', 'PingFang SC', 'Microsoft YaHei', SimHei, sans-serif; word-break: keep-all; line-break: strict; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.25; }
+p { text-wrap: pretty; }
+*:focus-visible { outline: 3px solid rgb(var(--brand) / .55); outline-offset: 2px; border-radius: 10px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@layer components {
+  .card { @apply rounded-xl2 border border-line bg-card shadow-card; }
+  .btn { @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-base font-bold transition active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply btn bg-brand text-on-brand hover:brightness-95; }
+  .btn-ghost { @apply btn border border-line bg-card text-ink hover:bg-soft; }
+  .btn-soft { @apply btn bg-brand-soft text-brand-strong hover:brightness-95; }
+  .input { @apply min-h-[52px] w-full rounded-2xl border border-line bg-card px-4 py-3 text-lg text-ink placeholder:text-muted/70 focus:border-brand; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full border border-line bg-card px-3 py-1.5 text-sm font-semibold text-ink; }
+  .chip-on { @apply border-brand bg-brand-soft text-brand-strong; }
+  .page-title { @apply text-2xl font-extrabold sm:text-3xl; }
+}
